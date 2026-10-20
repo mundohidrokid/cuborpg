@@ -1,14 +1,11 @@
+
 name: Build CUBO RPG
 
 on:
   push:
-    branches:
-      - main
-      - master
+    branches: [main, master]
   pull_request:
-    branches:
-      - main
-      - master
+    branches: [main, master]
   workflow_dispatch:
 
 jobs:
@@ -22,13 +19,14 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build CUBO RPG
+      - name: Compile CUBO RPG
         run: make
 
-      - name: Upload 3DSX
+      - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: CUBO-RPG
+          name: CUBO-RPG-Build-0.1.0
           path: |
-            *.3dsx
-            *.elf
+            cubo_rpg.3dsx
+            cubo_rpg.elf
+          if-no-files-found: error
