@@ -1,0 +1,34 @@
+name: Build CUBO RPG
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    container:
+      image: devkitpro/devkitarm:latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build CUBO RPG
+        run: make
+
+      - name: Upload 3DSX
+        uses: actions/upload-artifact@v4
+        with:
+          name: CUBO-RPG
+          path: |
+            *.3dsx
+            *.elf
